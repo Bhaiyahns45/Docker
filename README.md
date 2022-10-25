@@ -1,5 +1,5 @@
 
-## Dockerfile example for python
+## Dockerfile example for python as base image
 
     # for a base image form python
     FROM python:3.8
@@ -20,7 +20,8 @@
     CMD ["python","run.py"]
 
 
-
+---------------------------
+---------------------------
 
 ## Image
 
@@ -56,6 +57,7 @@
     docker load -i file_name.tar (linux)
 
 ---------------------------
+---------------------------
 
 ## Container
 
@@ -90,8 +92,8 @@
    
     docker run -p 5000:5000 -d image_name
     
- 
- ----------------------------------------------------------
+---------------------------
+---------------------------
  
  
  
