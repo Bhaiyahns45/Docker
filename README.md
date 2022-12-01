@@ -93,6 +93,8 @@
     docker run -it --name container_name image_name
   
     docker run -td --name container_name -p 5000:5000 image_name (port mapping)
+    
+    OR
    
     docker run -p 5000:5000 -d image_name
     
