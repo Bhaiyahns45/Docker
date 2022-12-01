@@ -90,7 +90,9 @@
     docker ps 
 
 #### 9. Make container from docker image and run it
-    docker run -it --name container_name image_name
+    docker run -it --name container_name image_name ( make and run it )
+    
+    OR
   
     docker run -td --name container_name -p 5000:5000 image_name (port mapping)
     
