@@ -5,7 +5,7 @@
 
 ## Dockerfile example for python as base image
 
-    # for a base image form python
+    # for a base image from python
     FROM python:3.8
     
     # define the present working directory
@@ -14,7 +14,7 @@
     # copy the contents into the working dir
     COPY . /folder_name
     
-    # run pip to install the dependencies of the flask app
+    # run pip to install the dependencies of the app
     RUN pip install -r requirements.txt
     
     #expose the port
