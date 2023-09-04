@@ -27,9 +27,28 @@
 ---------------------------
 ## Dockerfile example for python as base image (Streamlit)
 
-
-
-
+    # Use the Python 3.9-slim base image
+    FROM python:3.9-slim
+    
+    # Define the present working directory
+    WORKDIR /app
+    
+    # Copy the contents into the working dir
+    COPY . /app
+    
+    # Install GLPK and other dependencies
+    RUN apt-get update && apt-get install -y glpk-utils && \
+        pip install pyomo && \
+        pip install -r requirements.txt
+    
+    # Expose the port
+    EXPOSE 8501
+    
+    # Set the working directory again (optional, in case you want to specify it)
+    WORKDIR /app
+    
+    # Define the entry point command to run your Streamlit app
+    ENTRYPOINT ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]
 
 ---------------------------
 
