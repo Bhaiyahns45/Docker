@@ -50,6 +50,37 @@
     # Define the entry point command to run your Streamlit app
     ENTRYPOINT ["streamlit", "run", "main.py", "--server.port=8501", "--server.address=0.0.0.0"]
 
+
+---------------------------
+## Dockerfile example for python as base image (Fastapi & GLPK)
+
+    # Use the Python 3.9-slim base image
+    FROM python:3.10
+    
+    # Define the present working directory
+    WORKDIR /app
+    
+    # Copy the contents into the working dir
+    COPY . /app
+    
+    # Install GLPK and other dependencies
+    RUN apt-get update && apt-get install -y glpk-utils && \
+        pip install pyomo && \
+        pip install -r requirements.txt
+    
+    
+    # Set the working directory again (optional, in case you want to specify it)
+    WORKDIR /app
+    
+    # Expose port 8000 to the outside world
+    EXPOSE 8000
+    
+    # Command to run the FastAPI application
+    CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+
+
+
 ---------------------------
 
 ## Image
@@ -97,22 +128,27 @@
     docker stop container_name
     
 #### 3. Stop all running container
-    docker stop $(dokcer ps -a -q)
+    docker stop $(docker ps -aq)
     
 #### 4. Delete container
     docker rm container_name
     
 #### 5. Delete all stopped container
-    docker rm $(dokcer ps -a -q)
+    docker rm $(docker ps -aq)
     
 #### 6. Go inside container
     docker attach container_name
+    docker exec -it container_id bash
     
 #### 7. List all containers
     docker ps -a
     
 #### 8. List all running containers
     docker ps 
+    
+#### 9. general
+    docker stats
+    docker info
 
 #### 9. Make container from docker image and run it
     docker run -it --name container_name image_name ( make and run it )
