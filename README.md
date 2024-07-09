@@ -54,7 +54,7 @@
 ---------------------------
 ## Dockerfile example for python as base image (Fastapi & GLPK)
 
-    # Use the Python 3.9-slim base image
+    # Use the Python 3.10 base image
     FROM python:3.10
     
     # Define the present working directory
