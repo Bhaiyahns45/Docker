@@ -115,5 +115,5 @@ Manually load the dump file (if necessary):
 
 sh
 Copy code
-psql -U postgres -d my_db -f /docker-entrypoint-initdb.d/latest_noahcare.dump
+pg_restore -U postgres -d my_db /docker-entrypoint-initdb.d/my_db.dump
 Following these steps should help you identify and resolve the issue with the missing distance_time table and ensure your PostgreSQL container is correctly initialized with your data. If you encounter any specific errors or issues during these steps, please share the details for further assistance.
