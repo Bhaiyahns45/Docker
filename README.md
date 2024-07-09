@@ -150,7 +150,7 @@
     docker stats
     docker info
 
-#### 9. Make container from docker image and run it
+#### 10. Make container from docker image and run it
     docker run -it --name container_name image_name ( make and run it )
     
     OR
@@ -160,6 +160,11 @@
     OR
    
     docker run -p 5000:5000 -d image_name
+
+#### 11. Stop and remove the existing containers, then recreate them with the updated configuration:
+    
+    docker-compose down
+    docker-compose up -d
     
 ---------------------------
 ---------------------------
