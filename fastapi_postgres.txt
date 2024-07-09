@@ -1,0 +1,119 @@
+t looks like the my_db database does not exist in your PostgreSQL container. This suggests that the SQL dump might not have been loaded correctly. Let's troubleshoot and resolve this issue step-by-step.
+
+Step 1: Verify Docker Compose Configuration
+Ensure your docker-compose.yml is correctly set up to load the SQL dump file:
+
+yaml
+Copy code
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: my_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d  # Ensure this folder exists and contains your SQL dump
+
+  web:
+    build: .
+    environment:
+      DB_NAME: my_db
+      DB_USER: postgres
+      DB_PASSWORD: root
+      DB_HOST: db
+      DB_PORT: 5432
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+Ensure the ./init-db directory exists and contains the latest_noahcare.dump file.
+
+Step 2: Recreate the Containers
+Sometimes, it's necessary to recreate the containers to ensure the initialization scripts are executed. Run the following commands to stop and remove the existing containers, then recreate them:
+
+sh
+Copy code
+docker-compose down
+docker-compose up -d
+Step 3: Check the PostgreSQL Logs
+After recreating the containers, check the PostgreSQL logs to ensure the initialization script ran correctly:
+
+sh
+Copy code
+docker-compose logs db
+Look for any errors or messages related to the database creation and dump file loading.
+
+Step 4: Verify Database Creation
+Execute into the PostgreSQL container and verify the database creation:
+
+sh
+Copy code
+docker exec -it c95f9f2404f5 bash
+Once inside the container, connect to the PostgreSQL server and list the databases:
+
+sh
+Copy code
+psql -U postgres
+Inside the PostgreSQL shell, list the databases to ensure my_db exists:
+
+sql
+Copy code
+\l
+If my_db is listed, connect to it and list the tables:
+
+sql
+Copy code
+\c my_db
+\dt
+Step 5: Manually Load the Dump File
+If the database or tables are still missing, you can manually load the dump file. Inside the container, run the following command:
+
+sh
+Copy code
+psql -U postgres -d my_db -f /docker-entrypoint-initdb.d/latest_noahcare.dump
+This will manually load the latest_noahcare.dump file into the my_db database.
+
+Summary of Commands
+Stop and remove containers:
+
+sh
+Copy code
+docker-compose down
+Start containers:
+
+sh
+Copy code
+docker-compose up -d
+Check PostgreSQL logs:
+
+sh
+Copy code
+docker-compose logs db
+Execute into the PostgreSQL container:
+
+sh
+Copy code
+docker exec -it c95f9f2404f5 bash
+Connect to PostgreSQL and list databases:
+
+sh
+Copy code
+psql -U postgres
+\l
+\c my_db
+\dt
+Manually load the dump file (if necessary):
+
+sh
+Copy code
+psql -U postgres -d my_db -f /docker-entrypoint-initdb.d/latest_noahcare.dump
+Following these steps should help you identify and resolve the issue with the missing distance_time table and ensure your PostgreSQL container is correctly initialized with your data. If you encounter any specific errors or issues during these steps, please share the details for further assistance.
