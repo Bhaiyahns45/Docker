@@ -168,8 +168,38 @@
     
 ---------------------------
 ---------------------------
+
+Error :-
+
+  WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by
+ => => #  'NewConnectionError('<pip._vendor.urllib3.connection.HTTPSConnection object at 0x7fbdeedbc460>: Failed to establi
  
- 
+Steps:
+Open /etc/resolv.conf with a text editor: You need superuser (root) privileges to edit this file, so use a text editor like nano or vi:
+
+bash
+Copy code
+sudo nano /etc/resolv.conf
+or
+
+bash
+Copy code
+sudo vi /etc/resolv.conf
+Add the DNS server to the file: Once the file is open, add the following line to use Google's public DNS server:
+
+bash
+Copy code
+nameserver 8.8.8.8
+You can also add another Google DNS server for redundancy:
+
+bash
+Copy code
+nameserver 8.8.4.4
+Save and close the file:
+
+If using nano, press Ctrl + O to save and Ctrl + X to exit.
+If using vi, press Esc, type :wq, and hit Enter to save and exit
+
  
  
 
